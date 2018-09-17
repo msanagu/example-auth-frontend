@@ -6,6 +6,7 @@ export default class AuthService {
 	}
 
 	login = (email, password) => {
+		console.log("Starting Login Request", email, password);
 		return this.authFetch(`${this.domain}/users`, {
 			method: "POST",
 			body: JSON.stringify(email, password),
