@@ -3,12 +3,10 @@ import decode from 'jwt-decode'
 export default class AuthService {
 	constructor(domain) {
 		this.domain = domain || 'http://localhost:3001'
-		this.fetch = this.fetch.bind(this)
-		this.getUserId = this.getUserId.bind(this)
 	}
 
 	login = (email, password) => {
-		return this.fetch(`${this.domain}/users`, {
+		return this.authFetch(`${this.domain}/users`, {
 			method: "POST",
 			body: JSON.stringify(email, password),
 		})
@@ -63,12 +61,12 @@ export default class AuthService {
 		localStorage.removeItem('id_token');
 	}
 
-	getUserId() {
+	getUserId = () => {
 		const token = decode(this.getToken());
 		return token.sub
 	}
 
-	fetch(url, options) {
+	authFetch = (url, options) => {
 		const headers = {
 			'Accept': 'application/json',
 			'Content-Type': 'application/json'

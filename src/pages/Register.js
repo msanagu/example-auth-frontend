@@ -57,7 +57,7 @@ class RegisterPage extends Component {
 					{this.state.errors.password && <div>Error: Password  {this.state.errors.password[0]}</div>}
 					<button onSubmit={this.onSubmit}>Register</button>
 				</form>
-				{this.state.registerSuccess && <Redirect to="#" />}
+				{this.state.registerSuccess && <Redirect to="/protected" />}
 			</main>
 		)
 	}
