@@ -2,7 +2,7 @@ import decode from 'jwt-decode'
 
 export default class AuthService {
 	constructor(domain) {
-		this.domain = domain || 'http://localhost:3001'
+		this.domain = domain || 'http://localhost:3000'
 	}
 
 	login = (email, password) => {
@@ -17,7 +17,7 @@ export default class AuthService {
 	}
 
 	register = (user) => {
-		return this.fetch(`${this.domain}/users`, {
+		return this.authFetch(`${this.domain}/users`, {
 			method: "POST",
 			body: JSON.stringify(user),
 		})
