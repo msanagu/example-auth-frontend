@@ -6,13 +6,10 @@ export default class AuthService {
 	}
 
 	login = (email, password) => {
-		return this.authFetch(`${this.domain}/users`, {
+		console.log("Starting Login Request", email, password);
+		return this.authFetch(`${this.domain}/users/sign_in`, {
 			method: "POST",
 			body: JSON.stringify(email, password),
-		})
-		.then(res => {
-			this.setToken(res.jti)
-			return res
 		})
 	}
 
@@ -20,10 +17,6 @@ export default class AuthService {
 		return this.authFetch(`${this.domain}/users`, {
 			method: "POST",
 			body: JSON.stringify(user),
-		})
-		.then(res => {
-			this.setToken(res.jti)
-			return res
 		})
 	}
 
@@ -47,8 +40,9 @@ export default class AuthService {
 	}
 
 	// The token is stored in the browser
-	setToken(idToken) {
-		localStorage.setItem('id_token', idToken)
+	setToken(token) {
+		let parsedToken = token.split(' ')[1]
+		localStorage.setItem('id_token', parsedToken)
 	}
 
 	// Fetch the token from local storage
@@ -81,7 +75,12 @@ export default class AuthService {
 			...options
 		})
 		.then(this._checkStatus)
-		.then(response => response.json())
+		.then(res => {
+			let token = res.headers.get('Authorization')
+			// set a token, taken out of response from API
+			this.setToken(token)
+			return
+		})
 		.catch(err => {
 			console.log("::: FETCH ERROR CAUGHT:::", err)
 			return err

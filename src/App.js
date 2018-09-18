@@ -28,6 +28,8 @@ class App extends Component {
 						<Route path="/public" component={PublicExample} />
 						<Redirect from="/protected" to="/register" />
 						<Route path="/register" component={Register} />
+						<Route path="/login"
+						component={Login} />
 					</Switch>}
 				</Router>
 			</div>
