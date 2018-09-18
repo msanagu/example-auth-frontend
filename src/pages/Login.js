@@ -8,7 +8,7 @@ class Login extends Component {
 
         this.auth = new AuthService()
         this.state = {
-            form: {
+            user: {
                 email: "",
                 password: ""
             }
@@ -16,7 +16,7 @@ class Login extends Component {
     }
 
     render() {
-        let { email, password } = this.state.form
+        let { email, password } = this.state.user
         return (
             <main>
                 <form onSubmit={this.handleSubmit}>
@@ -46,8 +46,7 @@ class Login extends Component {
     // track each keystroke, save the value to state
     handleChange = (event) => {
         // copy form from state
-        // let { form } = this.state
-        let formCopy = this.state.form
+        let { user } = this.state
 
         // copy event target name and value (target will be a form field)
         let fieldName = event.target.name
@@ -56,17 +55,16 @@ class Login extends Component {
         console.log(inputValue, fieldName);
 
         // update form object with new value from user
-        formCopy[fieldName] = inputValue
+        user[fieldName] = inputValue
 
-        this.setState({form : formCopy})
+        this.setState({user})
     }
 
     // when user submits form,
     handleSubmit = (e) => {
         e.preventDefault()
-        let { email, password } = this.state.form
         // this function requires an email and password
-        this.auth.login(email, password)
+        this.auth.login(this.state)
     }
 }
 
