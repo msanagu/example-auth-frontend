@@ -77,8 +77,9 @@ export default class AuthService {
 		.then(this._checkStatus)
 		.then(res => {
 			let token = res.headers.get('Authorization')
+			// set a token, taken out of response from API
 			this.setToken(token)
-			return res.json()
+			return
 		})
 		.catch(err => {
 			console.log("::: FETCH ERROR CAUGHT:::", err)
